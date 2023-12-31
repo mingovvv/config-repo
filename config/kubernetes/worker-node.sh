@@ -86,29 +86,3 @@ sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 echo '======== [7] kubelet, kubeadm, kubectl 패키지 설치 ========'
 yum install -y kubelet-1.27.2-0.x86_64 kubeadm-1.27.2-0.x86_64 kubectl-1.27.2-0.x86_64 --disableexcludes=kubernetes
 systemctl enable --now kubelet
-
-
-
-echo '======== [8] kubeadm으로 클러스터 생성  ========'
-echo '======== [8-1] 클러스터 초기화 (Pod Network 세팅) ========'
-kubeadm init --pod-network-cidr=192.168.0.0/16 --service-cidr=192.168.0.0/16 --apiserver-advertise-address 192.168.0.4
-kubeadm token create --print-join-command > ~/join.sh
-
-echo '======== [8-2] kubectl 사용 설정 ========'
-mkdir -p $HOME/.kube
-cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-chown $(id -u):$(id -g) $HOME/.kube/config
-
-echo '======== [8-3] Pod Network 설치 (calico) ========'
-kubectl create -f https://raw.githubusercontent.com/k8s-1pro/install/main/ground/k8s-1.27/calico-3.25.1/calico.yaml
-kubectl create -f https://raw.githubusercontent.com/mingovvv/config-repo/master/config/kubernetes/calico-custom.yaml
-
-
-echo '======== [9] 쿠버네티스 편의기능 설치 ========'
-echo '======== [9-1] kubectl 자동완성 기능 ========'
-echo "source <(kubectl completion bash)" >> ~/.bashrc
-echo 'alias k=kubectl' >>~/.bashrc
-echo 'complete -o default -F __start_kubectl k' >>~/.bashrc
-
-echo '======== [9-2] Dashboard 설치 ========'
-kubectl create -f https://raw.githubusercontent.com/k8s-1pro/install/main/ground/k8s-1.27/dashboard-2.7.0/dashboard.yaml

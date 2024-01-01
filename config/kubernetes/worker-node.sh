@@ -18,9 +18,9 @@ yum install -y yum-utils iproute-tc
 
 echo '======== [4-5] Hosts 등록 ========'
 cat << EOF >> /etc/hosts
-192.168.0.4 vm-k8s-master
-192.168.0.5 vm-k8s-node-1
-192.168.0.6 vm-k8s-node-2
+192.168.4.4 vm-k8s-master
+192.168.4.5 vm-k8s-node-1
+192.168.4.6 vm-k8s-node-2
 EOF
 
 echo '======== [5] kubeadm 설치 전 사전작업 ========'

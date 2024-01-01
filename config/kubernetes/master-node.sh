@@ -18,9 +18,9 @@ yum install -y yum-utils iproute-tc
 
 echo '======== [4-5] Hosts 등록 ========'
 cat << EOF >> /etc/hosts
-192.168.0.4 vm-k8s-master
-192.168.0.5 vm-k8s-node-1
-192.168.0.6 vm-k8s-node-2
+192.168.4.4 vm-k8s-master
+192.168.4.5 vm-k8s-node-1
+192.168.4.6 vm-k8s-node-2
 EOF
 
 echo '======== [5] kubeadm 설치 전 사전작업 ========'
@@ -91,7 +91,7 @@ systemctl enable --now kubelet
 
 echo '======== [8] kubeadm으로 클러스터 생성  ========'
 echo '======== [8-1] 클러스터 초기화 (Pod Network 세팅) ========'
-kubeadm init --pod-network-cidr=192.168.4.0/24 --service-cidr=192.168.5.0/24 --apiserver-advertise-address 192.168.0.4
+kubeadm init --pod-network-cidr=192.168.5.0/24 --service-cidr=192.168.6.0/24 --apiserver-advertise-address 192.168.4.4
 kubeadm token create --print-join-command > ~/join.sh
 
 echo '======== [8-2] kubectl 사용 설정 ========'

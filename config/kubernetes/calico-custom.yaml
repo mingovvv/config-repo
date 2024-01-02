@@ -11,7 +11,7 @@ spec:
     ipPools:
       - blockSize: 26
         cidr: 20.96.0.0/12
-        encapsulation: VXLAN
+        encapsulation: VXLAN # 참고 : Azure IP-IN-IP 지원하지 않음
         natOutgoing: Enabled
         nodeSelector: all()
 

@@ -86,3 +86,7 @@ sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 echo '======== [7] kubelet, kubeadm, kubectl 패키지 설치 ========'
 yum install -y kubelet-1.27.2-0.x86_64 kubeadm-1.27.2-0.x86_64 kubectl-1.27.2-0.x86_64 --disableexcludes=kubernetes
 systemctl enable --now kubelet
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/kubelet.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
